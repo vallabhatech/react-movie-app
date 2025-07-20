@@ -48,28 +48,44 @@ function Home(){
 
     return ( 
     <div className="home">
-        <form onSubmit={handleSearch} className="search-form">
-            <input type="text"
-             placeholder="search for movies..." 
-             className="search-input"
-             value={searchQuery}
-             onChange={(e)=>setSearchQuery(e.target.value)}
-             />
-             <button type="submit" className="search-button">
-                Search
-                </button>
-        </form>
-{error&&<div classname="error-message">{error}</div>}
-
-        {loading ? (
-            <div className="loading">Loading...</div>
-        ):(
-        <div className="movies-grid">
-            {movies.map((movie)=>(
-                <MovieCard movie={movie} key={movie.id}/>
-                ))}
-        </div>
-        )}
+        <header className="home-hero">
+                <div className="hero-overlay"></div>
+                <div className="hero-content">
+                    <h1 className="hero-title">Discover Movies</h1>
+                    <p className="hero-subtitle">Search and save your favorite movies!</p>
+                    <form onSubmit={handleSearch} className="search-form">
+                        <input
+                            type="text"
+                            placeholder="Search for movies..."
+                            className="search-input"
+                            value={searchQuery}
+                            onChange={(e) => setSearchQuery(e.target.value)}
+                        />
+                        <button type="submit" className="search-button">
+                            Search
+                        </button>
+                    </form>
+                </div>
+            </header>
+            {error && (
+                <div className="error-message">
+                    <span>⚠️ {error}</span>
+                </div>
+            )}
+            {loading ? (
+                <div className="loading-spinner"></div>
+            ) : movies.length > 0 ? (
+                <div className="movies-grid">
+                    {movies.map((movie) => (
+                        <MovieCard movie={movie} key={movie.id} />
+                    ))}
+                </div>
+            ) : (
+                <div className="no-results">
+                    <img src="https://cdn-icons-png.flaticon.com/512/4076/4076549.png" alt="No results" className="no-results-img"/>
+                    <p>No movies found. Try a different search!</p>
+                </div>
+            )}
     </div>
     );
 }
